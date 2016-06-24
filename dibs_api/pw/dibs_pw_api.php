@@ -313,12 +313,13 @@ class dibs_pw_api extends dibs_pw_helpers {
             }
             exit((string)$iErr);
         }
-        
-   	$sQuery = "SELECT `status` FROM `" . $this->helper_dibs_tools_prefix() . 
+         	$sQuery = "SELECT `status` FROM `" . $this->helper_dibs_tools_prefix() . 
                                              self::api_dibs_get_tableName() . "` 
                    WHERE `orderid` = '" . self::api_dibs_sqlEncode($_POST['orderid']) . "' 
                    LIMIT 1;";
-        if($this->helper_dibs_db_read_single($sQuery, 'status') == 0) {
+                   
+            $status= $this->helper_dibs_db_read_single($sQuery, 'status') ;
+        if($status == "PENDING" || empty($status)) {
             $aFields = array('callback_action' => 1);
             $aResponse = $_POST;
             $iPayMethod = 2;
@@ -337,9 +338,8 @@ class dibs_pw_api extends dibs_pw_helpers {
             $aFields['ext_info'] = serialize($aResponse);
             unset($aResponse, $sDbKey, $sPostKey);
             $this->api_dibs_updateResultRow($aFields);
-            
-            if(method_exists($this, 'helper_dibs_hook_callback') && 
-                    is_callable(array($this, 'helper_dibs_hook_callback'))) {
+        
+            if(method_exists($this, 'helper_dibs_hook_callback') && $_POST['status']=="ACCEPTED") {
                 $this->helper_dibs_hook_callback($mOrder);
             }
             
@@ -353,8 +353,9 @@ class dibs_pw_api extends dibs_pw_helpers {
                 
              }
         }
-        else { $this->api_dibs_updateResultRow(array('callback_error' => 8));
-              exit(); }
+        else {
+            return false;
+        }  
                 
         return true;
     }
