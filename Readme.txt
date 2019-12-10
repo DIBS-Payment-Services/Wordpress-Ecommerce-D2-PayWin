@@ -4,7 +4,7 @@ just copy <code>dibspw.php</code> file in your Wordpress E-commerce <code>wp-e-c
 Setup
 =====
 Login in wordress, go to <b>Settings->Store->Payments</b>
-Find "DIBS Payment Window" and click Settings under it. 
+Find "Nets Payment Window" and click Settings under it. 
 Fill settings like merchantid, hmac code, partnerid(if you have it) e.t.c 
 Enable module. 
 Set test mode and try to test it. 
@@ -22,7 +22,7 @@ ver. 4.1.6 Release date: 22.05.2014
 - On invoice payments acquirer parameters saves in ordeer details. 
 
 ver. 4.1.7 Release date: 10.08.2014
-- added possibility to add DIBS logos in admin
+- added possibility to add Nets logos in admin
   http://tech.dibspayment.com/logos#check-out-logos
 ver. 4.1.8 Release date: 21.01.2015
 - added support for DX platform
